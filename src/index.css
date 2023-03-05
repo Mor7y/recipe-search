@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root{
+  --darkred: rgb(134, 1, 52);
+  --lightYellow: rgb(255, 253, 233);
+}
+
+html,
+body {
+  height: 100vh;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+header {
+  background-color: rgb(134, 1, 52);
+  height: 100px;
+  display: flex;
+  align-items: center;
+}
+
+header h2 {
+  margin-left: 30px;
+  color: rgb(255, 255, 255);
+}
+
+footer{
+  height: 120px;
+  background-color: var(--darkred);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+footer p {
+  color: white;
+  font-size: 10px;
+}

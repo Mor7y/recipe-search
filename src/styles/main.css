@@ -1,0 +1,84 @@
+.search-container {
+  height: 500px;
+  background: url(../components/images/coockingboard-unsplash.jpg);
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.search-container h1 {
+  font-size: 4em;
+  color: rgb(195, 195, 195);
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.571);
+}
+.finder {
+  width: 70%;
+  background-color: white;
+  margin-top: 20px;
+  height: 50px;
+  display: flex;
+  border: none;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+}
+
+.search-input {
+  width: 70%;
+  font-family: "Poppins";
+  font-weight: 500;
+  margin-left: 5px;
+  font-size: 1.5em;
+  letter-spacing: -0.04em;
+}
+
+.search-input:placeholder-shown {
+  margin-left: 5px;
+  font-size: 1em;
+}
+
+.search-input:focus {
+  outline: none;
+}
+
+.search-btn,
+.search-input,
+.filters-btn {
+  border: none;
+}
+
+.icon {
+  font-size: 1.5em;
+}
+
+.search-btn,
+.filters-btn {
+  width: 15%;
+  color: var(--lightYellow);
+  cursor: pointer;
+}
+
+.search-btn:hover,
+.filters-btn:hover {
+  background-color:  rgb(134, 1, 52);
+}
+
+.finder button {
+  background-color: rgb(59, 58, 58);
+}
+
+.filter-container {
+  position: relative;
+  width: 70%;
+}
+
+/* SMALL DEVICE */
+
+@media screen and (max-width: 600px) {
+  .finder {
+    width: 95%;
+  }
+
+}
+
