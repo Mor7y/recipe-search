@@ -2,6 +2,6 @@ import React from "react";
 
 export default function Header() {
   return <header>
-    <h2>Coocking Inspiration</h2>
+    <h2>Coocking Inspirations</h2>
   </header>;
 }
