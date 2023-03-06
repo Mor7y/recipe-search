@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from "react";
 import "../styles/recipes.css";
 
-export default function Recipes(props) {
+export default function Recipes({startFetch,url}) {
   const [recipes, setRecipes] = useState([]);
   const [macros, setMacros] = useState([]);
+  const [fetching, setFetching] = useState(false)
 
-  const { startFetch } = props;
-  const { url } = props;
-
+  useEffect(()=>{
+    setFetching(true)
+  },[startFetch])
 
   useEffect(() => {
-    const notFound = document.querySelector('.notFound')
+    const notFound = document.querySelector(".notFound");
+    notFound.style.opacity = "0";
+
+    if(fetching){
     async function fetchRecipes() {
       const response = await fetch(url);
       const data = await response.json();
-      if(data.hits){
-        notFound.style.opacity = '1'
-      }else{
-        notFound.style.opacity = '0'
+      if (Array.isArray(data.hits) && data.hits.length === 0) {
+        notFound.style.opacity = "1";
+      } else {
+        notFound.style.opacity = "0";
       }
       setRecipes(
         data.hits.map((recipe) => {
@@ -30,9 +34,11 @@ export default function Recipes(props) {
     } catch (err) {
       console.log(err);
     }
+  }
+  setFetching(false)
 
     return () => {};
-  }, [startFetch]);
+  }, [fetching, url]);
 
   useEffect(() => {
     setMacros(
@@ -52,7 +58,6 @@ export default function Recipes(props) {
     );
   }, [recipes]);
 
-
   const recipe = recipes.map((item, index) => {
     const generateId = Math.random().toString(36).substring(2, 15);
     const servingSize = 450;
@@ -60,7 +65,7 @@ export default function Recipes(props) {
       <div key={generateId} className="recipe-card">
         <div className="card-top">
           <div className="img">
-            <img src={item.image} />
+            <img src={item.image} alt="recipe" />
           </div>
           <div className="recipe-details">
             <h3 className="recipe-title">{item.label}</h3>
@@ -172,9 +177,7 @@ export default function Recipes(props) {
 
   return (
     <section className="recipes-container">
-      <h1 className="notFound">
-        Recipes Not Found
-      </h1>
+      <h1 className="notFound">Recipes Not Found</h1>
       {recipe}
     </section>
   );

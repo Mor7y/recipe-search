@@ -1,6 +1,3 @@
-import React from "react";
-
-// functions of Main component
 
 export function searchInput(
   e,

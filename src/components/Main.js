@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../styles/main.css";
-import Options from "./Filter-Options";
+import Options from "./Filters";
 import Recipes from "./Recipes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -30,7 +30,6 @@ export default function Main() {
 
   const app_key = process.env.REACT_APP_API_KEY;
   const app_id = process.env.REACT_APP_APP_ID;
-  console.log(process.env);
 
   function handleToggleOptions() {
     toggleOptions(showOptions, setShowOptions);
@@ -61,9 +60,8 @@ export default function Main() {
   }
 
   useEffect(() => {
-    setToggleUrlUpd(!toggleUrlUpd);
+    setToggleUrlUpd((toggleUrlUpd) => !toggleUrlUpd);
   }, [pickedOption]);
-
   useEffect(() => {
     const API = `&app_key=${app_key}`;
     const APP_ID = `&app_id=${app_id}`;
@@ -103,7 +101,16 @@ export default function Main() {
 
     const urlOptions = `${querry}${APP_ID}${API}${dietOptions}${alergyOptions}${cuisineOptions}${calories}`;
     setUrl(`https://api.edamam.com/api/recipes/v2?type=public&${urlOptions}`);
-  }, [toggleUrlUpd]);
+  }, [
+    toggleUrlUpd,
+    app_id,
+    app_key,
+    pickedOption,
+    selectedOption.Alergies,
+    selectedOption.Cuisine,
+    selectedOption.Diet,
+    selectedOption.Querry,
+  ]);
 
   const optionChoosed = !pickedOption
     ? null
