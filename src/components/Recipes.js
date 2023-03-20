@@ -83,7 +83,7 @@ export default function Recipes({startFetch,url}) {
           <div className="servings-wraper">
             <div className="servings-section">
               <p>1</p>
-              <p> serving({servingSize})</p>
+              <p> serving({servingSize}g)</p>
               <h4>
                 {((item.calories / item.totalWeight) * servingSize).toFixed()}
                 kcal

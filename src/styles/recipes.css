@@ -258,6 +258,7 @@
 
 @media screen and (max-width: 400px) {
   .recipes-container {
+    width: 100%;
     grid-template: auto/ minmax(90%, 100%);
   }
 

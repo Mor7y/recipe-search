@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../styles/main.css";
 import Options from "./Filters";
 import Recipes from "./Recipes";
@@ -27,13 +27,14 @@ export default function Main() {
   const [url, setUrl] = useState();
   const [toggleUrlUpd, setToggleUrlUpd] = useState(false);
   const [triggerFetch, setTriggerFetch] = useState(false);
+  const filterWraper = useRef();
 
   const app_key = process.env.REACT_APP_API_KEY;
   const app_id = process.env.REACT_APP_APP_ID;
 
   function handleToggleOptions() {
     toggleOptions(showOptions, setShowOptions);
-  }
+  };
 
   function handleChooseCategory(e) {
     chooseCategory(e, setCategory);
@@ -62,6 +63,7 @@ export default function Main() {
   useEffect(() => {
     setToggleUrlUpd((toggleUrlUpd) => !toggleUrlUpd);
   }, [pickedOption]);
+
   useEffect(() => {
     const API = `&app_key=${app_key}`;
     const APP_ID = `&app_id=${app_id}`;
@@ -112,6 +114,29 @@ export default function Main() {
     selectedOption.Querry,
   ]);
 
+  useEffect(() => {
+    function hideFilters(e) {
+      const filters = filterWraper.current.getBoundingClientRect();
+      const left = filters.left;
+      const right = filters.right;
+      const top = filters.top - 55;
+      const bottom = filters.bottom;
+      
+      if ((e.x > left && e.x < right && e.y > top && e.y < bottom) || e.pointerId === -1) {
+        return;
+      } else {
+        handleToggleOptions();
+      }
+    }
+
+    if (!showOptions) {
+      window.addEventListener("click", hideFilters);
+    }
+    return () => {
+      window.removeEventListener("click", hideFilters);
+    };
+  });
+
   const optionChoosed = !pickedOption
     ? null
     : pickedOption.map((option) => {
@@ -134,26 +159,21 @@ export default function Main() {
     <main>
       <section className="search-container">
         <h1>Find a Recipe</h1>
-        <div className="finder">
-          <button
-            onClick={() => {
-              setTriggerFetch(!triggerFetch);
-            }}
-            className="search-btn"
-          >
+        <form
+          className="finder"
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (!showOptions) handleToggleOptions();
+            setTriggerFetch(!triggerFetch);
+          }}
+        >
+          <button className="search-btn">
             <FontAwesomeIcon
               className="icon"
-              onClick={(e) => {
-                e.stopPropagation();
-                e.currentTarget.closest("button").click();
-              }}
               icon="fa-solid fa-magnifying-glass"
             />
           </button>
           <input
-            onKeyDown={(e) => {
-              e.key === "Enter" && setTriggerFetch(!triggerFetch);
-            }}
             onChange={(e) => {
               handleSearchInput(e, "Querry");
             }}
@@ -162,7 +182,11 @@ export default function Main() {
             value={selectedOption.Querry}
             placeholder="Search (ex: chicken)"
           ></input>
-          <button onClick={handleToggleOptions} className="filters-btn">
+          <button
+            type="button"
+            onClick={handleToggleOptions}
+            className="filters-btn"
+          >
             {showOptions ? (
               <FontAwesomeIcon
                 className="icon"
@@ -183,9 +207,9 @@ export default function Main() {
               />
             )}{" "}
           </button>
-        </div>
+        </form>
         <div className="filter-container">
-          <div className="filter-wraper">
+          <div className="filter-wraper" ref={filterWraper}>
             <div className="filter-category">
               <div onClick={handleChooseCategory}>Alergies</div>
               <div onClick={handleChooseCategory}>Diet</div>

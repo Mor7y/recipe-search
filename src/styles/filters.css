@@ -180,7 +180,7 @@
 
 .options-container {
   position: relative;
-  padding-left: 10px;
+  padding: 0.6rem;
   height: 100%;
   width: 60%;
   position: relative;
@@ -189,13 +189,15 @@
 .selected-options {
   display: flex;
   max-height: 260px;
+  gap: 0.5rem;
   flex-wrap: wrap;
+  padding: 3px;
   align-content: flex-start;
   width: 20%;
   height: 100%;
   border-left: 1px rgba(0, 0, 0, 0.2) solid;
   overflow-y: auto;
-  overflow-x: clip;
+  overflow-x: hidden;
 }
 
 .selected-options::-webkit-scrollbar,
@@ -219,13 +221,12 @@
   justify-content: space-between;
   gap: 5px;
   height: 30px;
+  padding: 2px;
   background-color: rgb(46, 46, 46);
   color: var(--lightYellow);
   font-weight: 500;
   border-radius: 5px;
-  padding-left: 3px;
   font-size: 12px;
-  margin: 5px;
   cursor: pointer;
 }
 
@@ -267,18 +268,13 @@
 
 /* SMALL DEVICE */
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
   .filter-container {
     width: 95%;
   }
   .filter-category div {
     font-size: 0.8em;
   }
-
-  .category-options {
-    padding-left: 5px;
-  }
-
   .option,
   .picked-option {
     font-size: 9px;
@@ -287,8 +283,21 @@
     font-size: 12px;
   }
 
-  .selected-options,
-  .clear-btn {
+  .selected-options{
     width: 23%;
   }
+
+  .clear-btn{
+    width: 22.4%;
+  }
+}
+
+@media screen and (max-width: 410px){
+  .filter-container {
+    width: 100%;
+  }
+
+ .picked-option{
+  font-size: 0.5rem;
+ }
 }
